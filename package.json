@@ -1,0 +1,11 @@
+{
+  "name": "cms",
+  "version": "0.0.1",
+  "description": "A college management system project for my DBMS course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kshitij Chauhan",
+  "license": "ISC"
+}
