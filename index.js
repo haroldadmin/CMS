@@ -1,7 +1,9 @@
 const Express = require('express');
 const app = Express();
+const db = require('./db/database').getDatabase();
 
-const db = require('./startup/db/db').db();
+require('./startup/db').init(db);
+require('./startup/routers')(app);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
