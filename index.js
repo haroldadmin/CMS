@@ -1,7 +1,7 @@
 const Express = require('express');
 const app = Express();
 
-const db = require('./startup/db.js')();
+const db = require('./startup/db.js').db();
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
