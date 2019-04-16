@@ -64,7 +64,6 @@ router.get("/:id/advisor", (req, res) => {
 router.post("/", (req, res) => {
     const { error } = validateStudent(req.body);
     if (error) {
-        console.log(error);
         return res.status(400).send({
             message: error.details[0].message
         });
