@@ -25,6 +25,11 @@ router.get("/:name", (req, res) => {
                 message: "An error occurred"
             });
         }
+        if (!rows) {
+            return res.status(404).send({
+                message: "A department with the requested name was not found."
+            });
+        }
         res.send(rows);
     });
 });

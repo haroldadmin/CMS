@@ -15,7 +15,7 @@ module.exports.instructorColumns = {
     id: "id",
     name: "name",
     salary: "salary",
-    department_name: "department_id"
+    department_name: "department_name"
 };
 
 module.exports.studentColumns = {
