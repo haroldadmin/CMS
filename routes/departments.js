@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const tables = require('../db/tables');
 const db = require('../db/database').getDatabase();
-const { validateDepartment } = require('../db/models');
+const { validateDepartment, validateTeaches } = require('../db/models');
 
 router.get("/", (req, res) => {
     const sqlQuery = `SELECT * FROM ${tables.tableNames.department}`;
@@ -102,6 +102,33 @@ router.post("/", (req, res) => {
         }
         res.send({
             message: "Department saved successfully."
+        });
+    });
+});
+
+router.post("/:name/instructors", (req, res) => {
+    const { error } = validateTeaches(req.body);
+    if (error) {
+        return res.status(400).send({
+            message: error.details[0].message
+        });
+    }
+
+    const teachesReq = req.body;
+    const sqlQuery = `
+    INSERT INTO ${tables.tableNames.teaches}
+    (${tables.teachesColumns.instructor_id}, ${tables.teachesColumns.section_id})
+    VALUES (${teachesReq.instructor_id}, ${teachesReq.section_id})`;
+
+    db.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occured while trying to save the instructor relation"
+            });
+        }
+        res.send({
+            message: "Instructor added to the department."
         });
     });
 });
