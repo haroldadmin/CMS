@@ -54,6 +54,28 @@ router.get("/:name/instructors", (req, res) => {
         }
         res.send(rows);
     });
-})
+});
+
+router.get("/:name/students", (req, res) => {
+    // Adding COLLATE NOCASE makes the queries case insensitive.
+    const sqlQuery = `
+    SELECT * FROM ${tables.tableNames.student}
+    WHERE ${tables.studentColumns.department_name} = ? COLLATE NOCASE`
+
+    db.get(sqlQuery, [req.params.name], (err, rows) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred"
+            });
+        }
+        if (!rows) {
+            return res.status(404).send({
+                message: "Students for the requested department name could not be found."
+            });
+        }
+        res.send(rows);
+    });
+});
 
 module.exports = router;
