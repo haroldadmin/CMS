@@ -1,6 +1,6 @@
 const Express = require('express');
 const app = Express();
-const db = require('./db/database').getDatabase();
+const db = require('./db/database').createDatabase();
 
 require('./startup/db').init(db);
 require('./startup/routers')(app);
