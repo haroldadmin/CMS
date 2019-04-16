@@ -55,4 +55,28 @@ router.get("/:id/sections", (req, res) => {
     });
 });
 
+router.get("/:id/department", (req, res) => {
+    const sqlQuery = `
+    SELECT * FROM ${tables.tableNames.department}
+    WHERE ${tables.deptColumns.deptName} =
+        (SELECT ${tables.instructorColumns.department_name} FROM ${tables.tableNames.instructor}
+         WHERE ${tables.instructorColumns.id} = ?
+         );`
+
+    db.get(sqlQuery, [req.params.id], (err, row) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred."
+            });
+        }
+        if (!row) {
+            return res.status(404).send({
+                message: "Department for this instructor not found."
+            });
+        }
+        return res.send(row);
+    })
+})
+
 module.exports = router;
