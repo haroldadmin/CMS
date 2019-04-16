@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const tables = require('../db/tables');
 const db = require('../db/database').getDatabase();
+const { validateDepartment } = require('../db/models');
 
 router.get("/", (req, res) => {
     const sqlQuery = `SELECT * FROM ${tables.tableNames.department}`;
@@ -75,6 +76,34 @@ router.get("/:name/students", (req, res) => {
             });
         }
         res.send(rows);
+    });
+});
+
+router.post("/", (req, res) => {
+    const { error } = validateDepartment(req.body);
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
+
+    const deptRequest = req.body;
+    const sqlQuery = `
+    INSERT INTO ${tables.tableNames.department}
+    (deptName, building, budget)
+    VALUES ('${deptRequest.deptName}', '${deptRequest.building}', ${deptRequest.budget})`
+
+    console.log(sqlQuery);
+
+    db.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(deptRequest);
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occured while trying to save the department details"
+            });
+        }
+        res.send({
+            message: "Department saved successfully."
+        });
     });
 });
 

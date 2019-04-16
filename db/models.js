@@ -1,9 +1,9 @@
 const Joi = require('joi');
 
 const deptSchema = {
-    deptName = Joi.string().min(2).max(50).required(),
-    building = Joi.string().min(2).max(50).required(),
-    budget = Joi.number().min(0).required()
+    deptName: Joi.string().min(2).max(50).required(),
+    building: Joi.string().min(2).max(50).required(),
+    budget: Joi.number().min(0).required()
 };
 
 const instructorSchema = {
