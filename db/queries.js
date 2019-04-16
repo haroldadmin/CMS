@@ -41,8 +41,29 @@ const createStudentsSql = `CREATE TABLE IF NOT EXISTS ${tableNames.student}(
         FOREIGN KEY(${studentColumns.department_name}) REFERENCES ${tableNames.department}(${deptColumns.deptName})
     );`
 
+
+const sectionColumns = tables.sectionColumns;
+const createSectionsSql = `CREATE TABLE IF NOT EXISTS ${tableNames.section}(
+    ${sectionColumns.id} INTEGER PRIMARY KEY NOT NULL,
+    ${sectionColumns.semester} INTEGER NOT NULL CHECK(${sectionColumns.semester} <= 8),
+    ${sectionColumns.year} INTEGER NOT NULL CHECK(${sectionColumns.year} <= 4)
+)`;
+
+/**
+ * The "teaches" table is a relationship set between an instructor and section,
+ * and can be used to query which teacher teaches which section.
+ */
+const teachesColumns = tables.teachesColumns;
+const creatTeachesSql = `CREATE TABLE IF NOT EXISTS ${tableNames.teaches}(
+    ${teachesColumns.instructor_id} INTEGER NOT NULL,
+    ${teachesColumns.section_id} INTEGER NOT NULL,
+    PRIMARY KEY (${teachesColumns.instructor_id}, ${teachesColumns.section_id})
+);`
+
 module.exports = {
     createDepartments: createDeptSql,
     createInstructors: createInstructorSql,
-    createStudents: createStudentsSql
-}
+    createStudents: createStudentsSql,
+    createSections: createSectionsSql,
+    createTeaches: creatTeachesSql
+};
