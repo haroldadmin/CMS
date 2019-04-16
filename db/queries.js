@@ -54,10 +54,12 @@ const createSectionsSql = `CREATE TABLE IF NOT EXISTS ${tableNames.section}(
  * and can be used to query which teacher teaches which section.
  */
 const teachesColumns = tables.teachesColumns;
-const creatTeachesSql = `CREATE TABLE IF NOT EXISTS ${tableNames.teaches}(
+const createTeachesSql = `CREATE TABLE IF NOT EXISTS ${tableNames.teaches}(
     ${teachesColumns.instructor_id} INTEGER NOT NULL,
     ${teachesColumns.section_id} INTEGER NOT NULL,
-    PRIMARY KEY (${teachesColumns.instructor_id}, ${teachesColumns.section_id})
+    PRIMARY KEY (${teachesColumns.instructor_id}, ${teachesColumns.section_id}),
+    FOREIGN KEY (${teachesColumns.instructor_id}) REFERENCES ${tableNames.instructor}(${instructorColumns.id}),
+    FOREIGN KEY (${teachesColumns.section_id}) REFERENCES ${tableNames.section}(${sectionColumns.id})
 );`
 
 module.exports = {
@@ -65,5 +67,5 @@ module.exports = {
     createInstructors: createInstructorSql,
     createStudents: createStudentsSql,
     createSections: createSectionsSql,
-    createTeaches: creatTeachesSql
+    createTeaches: createTeachesSql
 };

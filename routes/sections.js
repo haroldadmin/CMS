@@ -28,7 +28,33 @@ router.get("/:id", (req, res) => {
             });
         }
         res.send(rows);
+    });
+});
+
+router.get("/:id/instructors", (req, res) => {
+
+    const sqlQuery = `
+    SELECT * FROM ${tables.tableNames.instructor} 
+    WHERE ${tables.instructorColumns.id} IN
+        (SELECT ${tables.teachesColumns.instructor_id} 
+        FROM ${tables.tableNames.teaches} 
+        WHERE ${tables.teachesColumns.section_id} = $sectionId
+        );
+    `
+    db.all(sqlQuery, { $sectionId: req.params.id }, (err, rows) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({ message: "An error occurred." });
+        }
+
+        if (!rows) {
+            return res.status(404).send({
+                message: "Instructors of the section with the given ID could not be found."
+            });
+        }
+
+        res.send(rows);
     })
-})
+});
 
 module.exports = router;
