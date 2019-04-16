@@ -15,4 +15,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:name", (req, res) => {
+    // Adding COLLATE NOCASE makes the queries case insensitive.
+    const sqlQuery = `SELECT * FROM ${tables.tableNames.department} WHERE ${tables.deptColumns.deptName} = ? COLLATE NOCASE`;
+    db.get(sqlQuery, [req.params.name], (err, rows) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred"
+            });
+        }
+        res.send(rows);
+    });
+});
+
 module.exports = router;
