@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database').getDatabase();
 const tables = require('../db/tables');
+const { validateStudent } = require('../db/models');
 
 router.get("/", (req, res) => {
     const sqlQuery = `SELECT * FROM ${tables.tableNames.student}`;
@@ -57,6 +58,34 @@ router.get("/:id/advisor", (req, res) => {
             });
         }
         res.send(row);
+    });
+});
+
+router.post("/", (req, res) => {
+    const { error } = validateStudent(req.body);
+    if (error) {
+        console.log(error);
+        return res.status(400).send({
+            message: error.details[0].message
+        });
+    }
+
+    const studentReq = req.body;
+    const sqlQuery = `
+    INSERT INTO ${tables.tableNames.student}
+    (name, total_credits, department_name)
+    VALUES ('${studentReq.name}', ${studentReq.total_credits}, '${studentReq.department_name}')`;
+
+    db.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occured while trying to save the student details"
+            });
+        }
+        res.send({
+            message: "Student saved successfully."
+        });
     });
 });
 

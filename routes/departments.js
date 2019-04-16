@@ -82,7 +82,9 @@ router.get("/:name/students", (req, res) => {
 router.post("/", (req, res) => {
     const { error } = validateDepartment(req.body);
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).send({
+            message: error.details[0].message
+        });
     }
 
     const deptRequest = req.body;
@@ -91,11 +93,8 @@ router.post("/", (req, res) => {
     (deptName, building, budget)
     VALUES ('${deptRequest.deptName}', '${deptRequest.building}', ${deptRequest.budget})`
 
-    console.log(sqlQuery);
-
     db.run(sqlQuery, (err) => {
         if (err) {
-            console.log(deptRequest);
             console.log(err);
             return res.status(500).send({
                 message: "An error occured while trying to save the department details"
