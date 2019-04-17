@@ -11,7 +11,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "joi": "^14.3.1",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^4.0.6",
+    "swagger-jsdoc": "^3.2.9",
+    "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.11"
