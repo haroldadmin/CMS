@@ -19,7 +19,21 @@ const { validateSection } = require('../db/models');
  *          year:
  *              type: integer
  *              description: The year of this section. Should be between 1 and 4.
- * 
+ *  Instructor:
+ *      type: object
+ *      properties:
+ *          name:
+ *              type: string
+ *              example: "Jane Doe"
+ *          department_name:
+ *              type: string
+ *              example: "Computer Science"
+ *          salary:
+ *              type: integer
+ *              example: 1000
+ *          id:
+ *              type: integer
+ *              example: 1
  *  Error:
  *      type: object
  *      properties:
@@ -142,7 +156,7 @@ router.get("/:id", (req, res) => {
  *          200:
  *              description: An array of instructors
  *              schema:
- *                  $ref: "#/definitions/Section"
+ *                  $ref: "#/definitions/Instructor"
  *          404:
  *              description: Section not found
  *              schema:
