@@ -43,6 +43,12 @@ const { validateStudent } = require('../db/models');
  *          message:
  *              type: string
  *              example: "Resource is required"
+ *  Success:
+ *      type: object
+ *      properties:
+ *          message:
+ *              type: string
+ *              example: "Resource saved successfully"
  */
 
 /**

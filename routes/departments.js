@@ -47,30 +47,6 @@ const { validateDepartment, validateTeaches } = require('../db/models');
  *              type: integer
  *              example: 1
  *              description: The section taught by the instructor in this department
- *  Error:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "An error occurred"
- *  Not Found:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "The requested resource could not be found"
- *  Invalid Schema:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "Resource is required"
- *  Success:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "Resource saved successfully"
  */
 
 /**

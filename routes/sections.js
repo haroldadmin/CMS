@@ -19,39 +19,6 @@ const { validateSection } = require('../db/models');
  *          year:
  *              type: integer
  *              description: The year of this section. Should be between 1 and 4.
- *  Instructor:
- *      type: object
- *      properties:
- *          name:
- *              type: string
- *              example: "Jane Doe"
- *          department_name:
- *              type: string
- *              example: "Computer Science"
- *          salary:
- *              type: integer
- *              example: 1000
- *          id:
- *              type: integer
- *              example: 1
- *  Error:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "An error occurred"
- *  Not Found:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "The requested resource could not be found"
- *  Invalid Schema:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "Resource is required"
  */
 
 /**
@@ -215,7 +182,7 @@ router.get("/:id/instructors", (req, res) => {
  *          200:
  *              description: Section saved successfully
  *              schema:
- *                  $ref: "#/definitions/Student"
+ *                  $ref: "#/definitions/Success"
  *          400:
  *              description: Invalid schema of the section object
  *              schema:

@@ -33,52 +33,6 @@ const { validateInstructor } = require('../db/models');
  *          salary:
  *              type: integer
  *              example: 1000
- *  Department:
- *      type: object
- *      properties:
- *          deptName:
- *              type: string
- *              description: The name of the department. Must be unique.
- *              example: Computer Science
- *          building:
- *              type: string
- *              description: The building allotted to this department
- *              example: Computer Department
- *          budget:
- *              type: integer
- *              description: The budget approved for this department
- *              example: 100000000
- *  Section:
- *      type: object
- *      properties:
- *          id:
- *              type: integer
- *              example: 1
- *          semester:
- *              type: integer
- *              description: The semester of this section. Should be between 1 and 8.
- *              example: 4
- *          year:
- *              type: integer
- *              description: The year of this section. Should be between 1 and 4.
- *  Error:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "An error occurred"
- *  Not Found:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "The requested resource could not be found"
- *  Invalid Schema:
- *      type: object
- *      properties:
- *          message:
- *              type: string
- *              example: "Resource is required"
  */
 
 /**
@@ -295,7 +249,7 @@ router.get("/:id/department", (req, res) => {
  *          200:
  *              description: Instructor saved successfully
  *              schema:
- *                  $ref: "#/definitions/Student"
+ *                  $ref: "#/definitions/Success"
  *          400:
  *              description: Invalid schema of the instructor object
  *              schema:
