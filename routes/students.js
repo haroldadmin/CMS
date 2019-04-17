@@ -26,16 +26,19 @@ const { validateStudent } = require('../db/models');
  *          type: string
  *          example: Computer Science
  *  Error:
+ *      type: object
  *      properties:
  *          message:
  *              type: string
  *              example: "An error occurred"
  *  Not Found:
+ *      type: object
  *      properties:
  *          message:
  *              type: string
  *              example: "The requested resource could not be found"
  *  Invalid Schema:
+ *      type: object
  *      properties:
  *          message:
  *              type: string
