@@ -135,7 +135,7 @@ router.get("/", (req, res) => {
  *          200:
  *              description: The requested Instructor object
  *              schema:
- *                  $ref: "#/definitions/Student"
+ *                  $ref: "#/definitions/Instructor"
  *          404:
  *              description: Instructor not found
  *              schema:
