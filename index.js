@@ -4,6 +4,7 @@ const db = require('./db/database').createDatabase();
 
 require('./startup/db').init(db);
 require('./startup/routers')(app);
+require('./startup/swagger')(app);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
