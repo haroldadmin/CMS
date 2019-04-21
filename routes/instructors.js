@@ -68,6 +68,11 @@ router.get("/", (req, res) => {
     });
 });
 
+
+router.get("/create", (req, res) => {
+    res.render('../FrontEnd/createInstructor.ejs');
+});
+
 /**
  * @swagger
  * /instructors/{id}:
@@ -167,7 +172,7 @@ router.get("/:id/sections", (req, res) => {
                 message: "No sections taught by this instructor could be found."
             });
         }
-        return res.send(rows);
+        res.render("../FrontEnd/instructorSections.ejs", {section:rows});
     });
 });
 
@@ -222,7 +227,7 @@ router.get("/:id/department", (req, res) => {
                 message: "Department for this instructor not found."
             });
         }
-        return res.send(row);
+        res.render("../FrontEnd/instructorDeptt.ejs", {department:row});
     })
 })
 
