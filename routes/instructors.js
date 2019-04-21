@@ -64,7 +64,7 @@ router.get("/", (req, res) => {
                 message: "An error occurred."
             })
         }
-        res.send(rows);
+        res.render("../FrontEnd/instructors.ejs", {instructor:rows});
     });
 });
 
@@ -112,7 +112,7 @@ router.get("/:id", (req, res) => {
                 message: "An instructor with the requested ID was not found."
             });
         }
-        res.send(rows);
+        res.render("../FrontEnd/instructorByID.ejs", {instructor:rows});
     });
 });
 
@@ -149,10 +149,10 @@ router.get("/:id", (req, res) => {
  */
 router.get("/:id/sections", (req, res) => {
     const sqlQuery = `
-    SELECT * FROM ${tables.tableNames.section} 
+    SELECT * FROM ${tables.tableNames.section}
     WHERE ${tables.sectionColumns.id} IN
-        (SELECT ${tables.teachesColumns.section_id} 
-        FROM ${tables.tableNames.teaches} 
+        (SELECT ${tables.teachesColumns.section_id}
+        FROM ${tables.tableNames.teaches}
         WHERE ${tables.teachesColumns.instructor_id} = $instructorId
         );
     `
