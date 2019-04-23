@@ -1,11 +1,13 @@
 const Express = require('express');
+const bodyparser = require('body-parser');
 const studentsRouter = require('../routes/students');
 const departmentsRouter = require('../routes/departments');
 const instructorsRouter = require('../routes/instructors');
 const sectionsRouter = require('../routes/sections');
 
 module.exports = (app) => {
-    app.use(Express.json());
+    app.use(bodyparser.json());
+    app.use(bodyparser.urlencoded({ extended: true }));
     app.use("/students", studentsRouter);
     app.use("/departments", departmentsRouter);
     app.use("/instructors", instructorsRouter);

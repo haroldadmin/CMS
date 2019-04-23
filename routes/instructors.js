@@ -64,7 +64,7 @@ router.get("/", (req, res) => {
                 message: "An error occurred."
             })
         }
-        res.render("../FrontEnd/instructors.ejs", {instructor:rows});
+        res.render("../FrontEnd/instructors.ejs", { instructor: rows });
     });
 });
 
@@ -117,7 +117,7 @@ router.get("/:id", (req, res) => {
                 message: "An instructor with the requested ID was not found."
             });
         }
-        res.render("../FrontEnd/instructorByID.ejs", {instructor:rows});
+        res.render("../FrontEnd/instructorByID.ejs", { instructor: rows });
     });
 });
 
@@ -172,7 +172,7 @@ router.get("/:id/sections", (req, res) => {
                 message: "No sections taught by this instructor could be found."
             });
         }
-        res.render("../FrontEnd/instructorSections.ejs", {section:rows});
+        res.render("../FrontEnd/instructorSections.ejs", { section: rows });
     });
 });
 
@@ -227,7 +227,7 @@ router.get("/:id/department", (req, res) => {
                 message: "Department for this instructor not found."
             });
         }
-        res.render("../FrontEnd/instructorDeptt.ejs", {department:row});
+        res.render("../FrontEnd/instructorDeptt.ejs", { department: row });
     })
 })
 
@@ -260,19 +260,49 @@ router.get("/:id/department", (req, res) => {
  *              schema:
  *                  $ref: "#/defintions/Invalid Schema"
  */
+// router.post("/", (req, res) => {
+//     const { error } = validateInstructor(req.body);
+//     if (error) {
+//         return res.status(400).send({
+//             message: error.details[0].message
+//         });
+//     }
+
+//     const instructorReq = req.body;
+//     const sqlQuery = `
+//     INSERT INTO ${tables.tableNames.instructor}
+//     (name, salary, department_name)
+//     VALUES ('${instructorReq.name}', ${instructorReq.salary}, '${instructorReq.department_name}')`;
+
+//     db.run(sqlQuery, (err) => {
+//         if (err) {
+//             console.log(err);
+//             return res.status(500).send({
+//                 message: "An error occured while trying to save the instructor details"
+//             });
+//         }
+//         res.send({
+//             message: "Instructor saved successfully."
+//         });
+//     });
+// });
+
 router.post("/", (req, res) => {
     const { error } = validateInstructor(req.body);
+    console.log(req.body);
     if (error) {
         return res.status(400).send({
             message: error.details[0].message
         });
     }
 
-    const instructorReq = req.body;
+    const iname = req.body.name;
+    const idept = req.body.department_name;
+    const isalary = req.body.salary;
     const sqlQuery = `
     INSERT INTO ${tables.tableNames.instructor}
     (name, salary, department_name)
-    VALUES ('${instructorReq.name}', ${instructorReq.salary}, '${instructorReq.department_name}')`;
+    VALUES ('${iname}', ${isalary}, '${idept}')`;
 
     db.run(sqlQuery, (err) => {
         if (err) {

@@ -65,11 +65,11 @@ const { validateStudent } = require('../db/models');
  *      responses:
  *          200:
  *              description: An Array of all the students
- *              schema: 
+ *              schema:
  *                  $ref: "#/definitions/Student"
  *          500:
  *              description: Server error
- *              schema: 
+ *              schema:
  *                  $ref: "#/definitions/Error"
  */
 router.get("/", (req, res) => {
@@ -81,7 +81,8 @@ router.get("/", (req, res) => {
                 message: "An error occurred"
             });
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/students.ejs", {students:rows});
     });
 });
 
@@ -131,7 +132,8 @@ router.get("/:id", (req, res) => {
                 message: "A student with the requested ID was not found."
             });
         }
-        return res.send(rows);
+        // return res.send(rows);
+        res.render("../FrontEnd/studentById.ejs",{student:rows});
     });
 });
 
@@ -169,8 +171,8 @@ router.get("/:id", (req, res) => {
 router.get("/:id/advisor", (req, res) => {
     const sqlQuery = `
     SELECT * FROM ${tables.tableNames.instructor}
-    WHERE ${tables.instructorColumns.id} = 
-        (SELECT ${tables.studentColumns.instructor_id} 
+    WHERE ${tables.instructorColumns.id} =
+        (SELECT ${tables.studentColumns.instructor_id}
         FROM ${tables.tableNames.student}
         WHERE ${tables.studentColumns.id} = ?
         )`;
@@ -187,7 +189,8 @@ router.get("/:id/advisor", (req, res) => {
                 message: "Advisor for this student not found."
             });
         }
-        res.send(row);
+        // res.send(row);
+        res.render("../FrontEnd/studentAdvisor.ejs",{instructor:row});
     });
 });
 
@@ -203,12 +206,12 @@ router.get("/:id/advisor", (req, res) => {
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: student 
+ *          - name: student
  *            description: The student to be added
  *            in: body
  *            required: true
  *            type: object
- *            schema: 
+ *            schema:
  *              $ref: "#/definitions/Student"
  *      responses:
  *          200:

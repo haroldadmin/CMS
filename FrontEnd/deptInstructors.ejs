@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Instructors in the Deptt</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    table {
+
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even){background-color: #f2f2f2}
+
+    th {
+      background-color: #6699FF;
+      color: white;
+    }
+
+    h1{
+      text-align: center;
+    }
+
+    a{
+      color: black;
+    }
+  </style>
+</head>
+</head>
+<body>
+
+  <h1>Instructors in the Department</h1>
+  <br>
+  <div class="container">
+    <table>
+    <tr>
+      <th>Name</th>
+      <th>Department Name</th>
+      <th>Salary</th>
+      <th>ID</th>
+    </tr>
+
+ 
+    <tr>
+      <td><a href="/instructors/<%=instructors.id%>"><%=instructors.name%></a></td>
+      <td><%=instructors.department_name%></td>
+      <td>₹ <%=instructors.salary%></td>
+      <td><%=instructors.id%></td>
+    </tr>
+    </table>
+
+  </div>
+</body>
+</html>

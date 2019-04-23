@@ -79,7 +79,8 @@ router.get("/", (req, res) => {
                 message: "An error occurred"
             });
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/departments.ejs", {departments:rows});
     });
 });
 
@@ -129,7 +130,8 @@ router.get("/:name", (req, res) => {
                 message: "A department with the requested name was not found."
             });
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/departmentByName.ejs", {department:rows});
     });
 });
 
@@ -182,7 +184,8 @@ router.get("/:name/instructors", (req, res) => {
                 message: "Instructors for the requested department name could not be found."
             });
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/deptInstructors.ejs", {instructors:rows});
     });
 });
 
@@ -235,7 +238,8 @@ router.get("/:name/students", (req, res) => {
                 message: "Students for the requested department name could not be found."
             });
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/deptStudents.ejs",{student:rows});
     });
 });
 

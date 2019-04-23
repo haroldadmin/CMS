@@ -50,7 +50,8 @@ router.get("/", (req, res) => {
                 message: "An error occurred."
             })
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/sections.ejs",{sections:rows});
     });
 });
 
@@ -98,7 +99,8 @@ router.get("/:id", (req, res) => {
                 message: "A section with the requested ID could not be found."
             });
         }
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/sectionById.ejs",{section:rows});
     });
 });
 
@@ -155,7 +157,8 @@ router.get("/:id/instructors", (req, res) => {
             });
         }
 
-        res.send(rows);
+        // res.send(rows);
+        res.render("../FrontEnd/sectionInstructors.ejs",{instructors:rows});
     })
 });
 
