@@ -250,4 +250,48 @@ router.post("/", (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /students/{id}:
+ *  delete:
+ *      tags:
+ *          - students
+ *      description: Delete a single student by their ID
+ *      consumes:
+ *          - application/json
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: id
+ *            description: Student's ID
+ *            in: path
+ *            required: true
+ *            type: integer
+ *      responses:
+ *          200:
+ *              description: Student deleted successfully 
+ *              schema:
+ *                  $ref: "#/definitions/Success"
+ *          500:
+ *              description: Server error
+ *              schema:
+ *                  $ref: "#/definitions/Error"
+ */
+router.delete("/:id", (req, res) => {
+    const sqlQuery = `
+    DELETE FROM ${tables.tableNames.student}
+    WHERE ${tables.studentColumns.id} == ?`
+
+    db.run(sqlQuery, [req.params.id], (err) => {
+        if (err) {
+            return res.status(500).send({
+                message: "An error occurred while trying to delete this student."
+            });
+        }
+        return res.send({
+            message: "Student deleted successfully."
+        });
+    });
+});
+
 module.exports = router;
