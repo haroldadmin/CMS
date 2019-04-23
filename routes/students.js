@@ -48,7 +48,7 @@ const { validateStudent } = require('../db/models');
  *      properties:
  *          message:
  *              type: string
- *              example: "Resource saved successfully"
+ *              example: "Operation completed successfully"
  */
 
 /**
@@ -82,7 +82,7 @@ router.get("/", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/students.ejs", {students:rows});
+        res.render("../FrontEnd/students.ejs", { students: rows });
     });
 });
 
@@ -133,7 +133,7 @@ router.get("/:id", (req, res) => {
             });
         }
         // return res.send(rows);
-        res.render("../FrontEnd/studentById.ejs",{student:rows});
+        res.render("../FrontEnd/studentById.ejs", { student: rows });
     });
 });
 
@@ -190,7 +190,7 @@ router.get("/:id/advisor", (req, res) => {
             });
         }
         // res.send(row);
-        res.render("../FrontEnd/studentAdvisor.ejs",{instructor:row});
+        res.render("../FrontEnd/studentAdvisor.ejs", { instructor: row });
     });
 });
 

@@ -317,4 +317,44 @@ router.post("/", (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /instructors/{id}:
+ *  delete:
+ *      tags:
+ *          - instructors
+ *      description: Delete an instructor from the database
+ *      consumes:
+ *          - application/json
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: id
+ *            description: The id of the instructor to be deleted
+ *            in: path
+ *            required: true
+ *            type: integer
+ *      responses:
+ *          200:
+ *              description: Instructor deleted successfully
+ *              schema:
+ *                  $ref: "#/definitions/Success"
+ */
+router.delete("/:id", (req, res) => {
+    const sqlQuery =
+        `DELETE FROM ${tables.tableNames.instructor}
+    WHERE ${tables.instructorColumns.id} = ?`;
+    db.run(sqlQuery, [req.params.id], (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred while trying to delete the instructor"
+            });
+        }
+        return res.send({
+            message: "Instructor deleted successfully."
+        });
+    });
+});
+
 module.exports = router;
