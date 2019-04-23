@@ -338,10 +338,6 @@ router.post("/", (req, res) => {
  *              description: Instructor deleted successfully
  *              schema:
  *                  $ref: "#/definitions/Success"
- *          404:
- *              description: Instructor with the given ID not found
- *              schema:
- *                  $ref: "#/definitions/Not Found"
  */
 router.delete("/:id", (req, res) => {
     const sqlQuery =

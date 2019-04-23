@@ -80,7 +80,7 @@ router.get("/", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/departments.ejs", {departments:rows});
+        res.render("../FrontEnd/departments.ejs", { departments: rows });
     });
 });
 
@@ -131,7 +131,7 @@ router.get("/:name", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/departmentByName.ejs", {department:rows});
+        res.render("../FrontEnd/departmentByName.ejs", { department: rows });
     });
 });
 
@@ -185,7 +185,7 @@ router.get("/:name/instructors", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/deptInstructors.ejs", {instructors:rows});
+        res.render("../FrontEnd/deptInstructors.ejs", { instructors: rows });
     });
 });
 
@@ -239,7 +239,7 @@ router.get("/:name/students", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/deptStudents.ejs",{student:rows});
+        res.render("../FrontEnd/deptStudents.ejs", { student: rows });
     });
 });
 
@@ -273,6 +273,7 @@ router.get("/:name/students", (req, res) => {
  *                  $ref: "#/defintions/Invalid Schema"
  */
 router.post("/", (req, res) => {
+    console.log("Request to post department received.")
     const { error } = validateDepartment(req.body);
     if (error) {
         return res.status(400).send({
@@ -360,5 +361,55 @@ router.post("/:name/instructors", (req, res) => {
         });
     });
 });
+
+/**
+ * @swagger
+ * /departments/{name}:
+ *  delete:
+ *      tags:
+ *          - departments
+ *      description: Delete a single departments by its name
+ *      consumes:
+ *          - application/json
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: name
+ *            description: Department's name
+ *            in: path
+ *            required: true
+ *            type: string
+ *      responses:
+ *          200:
+ *              description: Department deleted successfully
+ *              schema:
+ *                  $ref: "#/definitions/Department"
+ *          404:
+ *              description: Department not found
+ *              schema:
+ *                  $ref: "#/definitions/Not Found"
+ *          500:
+ *              description: Server error
+ *              schema:
+ *                  $ref: "#/definitions/Error"
+ */
+router.delete("/:name", (req, res) => {
+    const sqlQuery = `
+    DELETE FROM ${tables.tableNames.department}
+    WHERE ${tables.deptColumns.deptName} = ? 
+    COLLATE NOCASE`
+
+    db.run(sqlQuery, [req.params.name], (err) => {
+        console.log(this);
+        if (err) {
+            return res.status(500).send({
+                message: "An error occurred while trying to delete this department"
+            });
+        }
+        res.send({
+            message: "Department deleted successfully"
+        });
+    })
+})
 
 module.exports = router;
