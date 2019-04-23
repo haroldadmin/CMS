@@ -12,6 +12,7 @@ const { validateSection } = require('../db/models');
  *          id:
  *              type: integer
  *              example: 1
+ *              description: The unique identifier for this section
  *          semester:
  *              type: integer
  *              description: The semester of this section. Should be between 1 and 8.
@@ -51,7 +52,7 @@ router.get("/", (req, res) => {
             })
         }
         // res.send(rows);
-        res.render("../FrontEnd/sections.ejs",{sections:rows});
+        res.render("../FrontEnd/sections.ejs", { sections: rows });
     });
 });
 
@@ -100,7 +101,7 @@ router.get("/:id", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/sectionById.ejs",{section:rows});
+        res.render("../FrontEnd/sectionById.ejs", { section: rows });
     });
 });
 
@@ -158,7 +159,7 @@ router.get("/:id/instructors", (req, res) => {
         }
 
         // res.send(rows);
-        res.render("../FrontEnd/sectionInstructors.ejs",{instructors:rows});
+        res.render("../FrontEnd/sectionInstructors.ejs", { instructors: rows });
     })
 });
 
@@ -214,6 +215,53 @@ router.post("/", (req, res) => {
         }
         res.send({
             message: "Section saved successfully."
+        });
+    });
+});
+
+/**
+ * @swagger
+ * /sections/{id}:
+ *  delete:
+ *      tags:
+ *          - sections
+ *      description: Delete a single section by its ID
+ *      consumes:
+ *          - application/json
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: id
+ *            description: Section's ID
+ *            in: path
+ *            required: true
+ *            type: integer
+ *      responses:
+ *          200:
+ *              description: Section deleted successfully
+ *              schema:
+ *                  $ref: "#/definitions/Success"
+ *          500:
+ *              description: Server error
+ *              schema:
+ *                  $ref: "#/definitions/Error"
+ */
+router.delete("/:id", (req, res) => {
+    const sqlQuery = `
+    DELETE FROM ${tables.tableNames.section}
+    WHERE ${tables.sectionColumns.id} = ?`;
+
+    console.log(sqlQuery);
+
+    db.run(sqlQuery, [req.params.id], (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred while trying to delete this section."
+            });
+        }
+        res.send({
+            message: "Section deleted successfully"
         });
     });
 });

@@ -383,11 +383,7 @@ router.post("/:name/instructors", (req, res) => {
  *          200:
  *              description: Department deleted successfully
  *              schema:
- *                  $ref: "#/definitions/Department"
- *          404:
- *              description: Department not found
- *              schema:
- *                  $ref: "#/definitions/Not Found"
+ *                  $ref: "#/definitions/Success"
  *          500:
  *              description: Server error
  *              schema:
@@ -400,7 +396,6 @@ router.delete("/:name", (req, res) => {
     COLLATE NOCASE`
 
     db.run(sqlQuery, [req.params.name], (err) => {
-        console.log(this);
         if (err) {
             return res.status(500).send({
                 message: "An error occurred while trying to delete this department"
