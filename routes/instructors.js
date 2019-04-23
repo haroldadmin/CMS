@@ -289,7 +289,6 @@ router.get("/:id/department", (req, res) => {
 
 router.post("/", (req, res) => {
     const { error } = validateInstructor(req.body);
-    console.log(req.body);
     if (error) {
         return res.status(400).send({
             message: error.details[0].message
@@ -353,11 +352,6 @@ router.delete("/:id", (req, res) => {
             console.log(err);
             return res.status(500).send({
                 message: "An error occurred while trying to delete the instructor"
-            });
-        }
-        if (!this.changes) {
-            return res.status(404).send({
-                message: "Instructor with the given ID was not found."
             });
         }
         return res.send({
