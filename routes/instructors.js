@@ -339,6 +339,10 @@ router.post("/", (req, res) => {
  *              description: Instructor deleted successfully
  *              schema:
  *                  $ref: "#/definitions/Success"
+ *          404:
+ *              description: Instructor with the given ID not found
+ *              schema:
+ *                  $ref: "#/definitions/Not Found"
  */
 router.delete("/:id", (req, res) => {
     const sqlQuery =
@@ -349,6 +353,11 @@ router.delete("/:id", (req, res) => {
             console.log(err);
             return res.status(500).send({
                 message: "An error occurred while trying to delete the instructor"
+            });
+        }
+        if (!this.changes) {
+            return res.status(404).send({
+                message: "Instructor with the given ID was not found."
             });
         }
         return res.send({
