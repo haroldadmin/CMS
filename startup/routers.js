@@ -1,4 +1,3 @@
-const Express = require('express');
 const bodyparser = require('body-parser');
 const studentsRouter = require('../routes/students');
 const departmentsRouter = require('../routes/departments');
