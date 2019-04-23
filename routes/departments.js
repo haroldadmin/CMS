@@ -115,6 +115,11 @@ router.get("/", (req, res) => {
  *              schema:
  *                  $ref: "#/definitions/Error"
  */
+
+router.get("/create", (req, res) => {
+    res.render('../FrontEnd/createDepartment.ejs');
+});
+
 router.get("/:name", (req, res) => {
     // Adding COLLATE NOCASE makes the queries case insensitive.
     const sqlQuery = `SELECT * FROM ${tables.tableNames.department} WHERE ${tables.deptColumns.deptName} = ? COLLATE NOCASE`;
@@ -281,11 +286,13 @@ router.post("/", (req, res) => {
         });
     }
 
-    const deptRequest = req.body;
+    const deptName = req.body.deptName;
+    const building = req.body.building;
+    const budget = req.body.budget;
     const sqlQuery = `
     INSERT INTO ${tables.tableNames.department}
     (deptName, building, budget)
-    VALUES ('${deptRequest.deptName}', '${deptRequest.building}', ${deptRequest.budget})`
+    VALUES ('${deptName}', '${building}', ${budget})`
 
     db.run(sqlQuery, (err) => {
         if (err) {
@@ -294,9 +301,7 @@ router.post("/", (req, res) => {
                 message: "An error occured while trying to save the department details"
             });
         }
-        res.send({
-            message: "Department saved successfully."
-        });
+        res.redirect("/departments");
     });
 });
 
