@@ -251,8 +251,6 @@ router.delete("/:id", (req, res) => {
     DELETE FROM ${tables.tableNames.section}
     WHERE ${tables.sectionColumns.id} = ?`;
 
-    console.log(sqlQuery);
-
     db.run(sqlQuery, [req.params.id], (err) => {
         if (err) {
             console.log(err);

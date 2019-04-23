@@ -177,7 +177,7 @@ router.get("/:name/instructors", (req, res) => {
     SELECT * FROM ${tables.tableNames.instructor} 
     WHERE ${tables.instructorColumns.department_name} = ? COLLATE NOCASE`
 
-    db.get(sqlQuery, [req.params.name], (err, rows) => {
+    db.all(sqlQuery, [req.params.name], (err, rows) => {
         if (err) {
             console.log(err);
             return res.status(500).send({
