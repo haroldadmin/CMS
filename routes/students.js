@@ -86,6 +86,10 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/create", function(req, res){
+    res.render("../FrontEnd/createStudent.ejs");
+});
+
 /**
  * @swagger
  * /students/{id}:
@@ -231,11 +235,13 @@ router.post("/", (req, res) => {
         });
     }
 
-    const studentReq = req.body;
+    const iname = req.body.name;
+    const icreds = req.body.total_credits;
+    const idept = req.body.department_name;
     const sqlQuery = `
     INSERT INTO ${tables.tableNames.student}
     (name, total_credits, department_name)
-    VALUES ('${studentReq.name}', ${studentReq.total_credits}, '${studentReq.department_name}')`;
+    VALUES ('${iname}', ${icreds}, '${idept}')`;
 
     db.run(sqlQuery, (err) => {
         if (err) {
@@ -244,9 +250,7 @@ router.post("/", (req, res) => {
                 message: "An error occured while trying to save the student details"
             });
         }
-        res.send({
-            message: "Student saved successfully."
-        });
+        res.redirect("/students");
     });
 });
 
