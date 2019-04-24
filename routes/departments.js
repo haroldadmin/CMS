@@ -116,6 +116,11 @@ router.get("/", (req, res) => {
  *                  $ref: "#/definitions/Error"
  */
 
+router.get("/:name/instructors/create", (req, res) => {
+    const name = req.params.name;
+    res.render('../FrontEnd/addInstructorToDept.ejs', {name:name});
+});
+
 router.get("/create", (req, res) => {
     res.render('../FrontEnd/createDepartment.ejs');
 });
@@ -190,7 +195,7 @@ router.get("/:name/instructors", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/deptInstructors.ejs", { instructors: rows });
+        res.render("../FrontEnd/deptInstructors.ejs", { instructors: rows});
     });
 });
 
@@ -348,11 +353,12 @@ router.post("/:name/instructors", (req, res) => {
         });
     }
 
-    const teachesReq = req.body;
+    const insId = req.body.instructor_id;
+    const secId = req.body.section_id;
     const sqlQuery = `
     INSERT INTO ${tables.tableNames.teaches}
     (${tables.teachesColumns.instructor_id}, ${tables.teachesColumns.section_id})
-    VALUES (${teachesReq.instructor_id}, ${teachesReq.section_id})`;
+    VALUES (${insId}, ${secId})`;
 
     db.run(sqlQuery, (err) => {
         if (err) {
@@ -361,9 +367,8 @@ router.post("/:name/instructors", (req, res) => {
                 message: "An error occured while trying to save the instructor relation"
             });
         }
-        res.send({
-            message: "Instructor added to the department."
-        });
+       res.redirect("/departments/:name/instructors");
+       // res.send("added");
     });
 });
 

@@ -56,6 +56,10 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/create", function(req, res){
+    res.render("../FrontEnd/createSection.ejs")
+});
+
 /**
  * @swagger
  * /sections/{id}:
@@ -200,11 +204,13 @@ router.post("/", (req, res) => {
         });
     }
 
-    const sectionReq = req.body;
+    const Id = req.body.id;
+    const Sem = req.body.semester;
+    const Yr = req.body.year;
     const sqlQuery = `
     INSERT INTO ${tables.tableNames.section}
     (id, semester, year)
-    VALUES (${sectionReq.id}, ${sectionReq.semester}, ${sectionReq.year})`;
+    VALUES (${Id}, ${Sem}, ${Yr})`;
 
     db.run(sqlQuery, (err) => {
         if (err) {
@@ -213,9 +219,7 @@ router.post("/", (req, res) => {
                 message: "An error occured while trying to save the section details"
             });
         }
-        res.send({
-            message: "Section saved successfully."
-        });
+        res.redirect("/sections")
     });
 });
 
