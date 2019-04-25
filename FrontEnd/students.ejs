@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Students</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <style>
     table {
 
@@ -45,6 +46,7 @@
       <th>Total Credits</th>
       <th>Instructor ID</th>
       <th>Department Name</th>
+      <th></th>
     </tr>
 
     <% students.forEach((student) => {%>
@@ -54,6 +56,11 @@
       <td><%=student.total_credits%></td>
       <td><%=student.instructor_id%></td>
       <td><%=student.department_name%></td>
+      <td>
+        <form action="/students/<%=student.id%>/delete" method ="POST">
+          <button class ="btn btn-danger"> <i class="fas fa-trash-alt" style="padding-right: 5px"></i>  Delete</button>
+        </form>
+      </td>
     </tr>
     <%})%>
     </table>

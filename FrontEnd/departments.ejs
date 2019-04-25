@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Departments</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <style>
     table {
 
@@ -54,7 +55,7 @@
       <td>₹ <%=department.budget%></td>
       <td>
         <form action="/departments/<%=department.deptName%>/delete" method ="POST">
-          <button>Delete</button>
+          <button class ="btn btn-danger"> <i class="fas fa-trash-alt" style="padding-right: 5px"></i> Delete</button>
         </form>
       </td>
     </tr>

@@ -268,7 +268,6 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-module.exports = router;
 
 /** 
  * Internal only route, not a part of the public API
@@ -289,3 +288,5 @@ router.post("/:id/delete", (req, res) => {
         res.redirect("/sections");
     });
 });
+
+module.exports = router;
