@@ -310,6 +310,22 @@ router.post("/", (req, res) => {
     });
 });
 
+router.post("/:name/delete", (req, res) => {
+    const sqlQuery = `
+    DELETE FROM ${tables.tableNames.department}
+    WHERE ${tables.deptColumns.deptName} = ? 
+    COLLATE NOCASE`
+
+    db.run(sqlQuery, [req.params.name], (err) => {
+        if (err) {
+            return res.status(500).send({
+                message: "An error occurred while trying to delete this department"
+            });
+        }
+        res.redirect("/departments");
+    })
+})
+
 /**
  * @swagger
  * /departments/{name}/instructors:
@@ -368,7 +384,6 @@ router.post("/:name/instructors", (req, res) => {
             });
         }
        res.redirect("/departments/:name/instructors");
-       // res.send("added");
     });
 });
 
@@ -414,7 +429,7 @@ router.delete("/:name", (req, res) => {
         res.send({
             message: "Department deleted successfully"
         });
-    })
+    });
 })
 
 module.exports = router;

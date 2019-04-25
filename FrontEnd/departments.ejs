@@ -29,6 +29,7 @@
 
     a{
       color: black;
+      text-decoration:underline;
     }
   </style>
 </head>
@@ -43,6 +44,7 @@
       <th>Department Name</th>
       <th>Building</th>
       <th>Budget</th>
+      <th></th>
     </tr>
 
     <% departments.forEach((department) => {%>
@@ -50,6 +52,11 @@
       <td><a href="/departments/<%=department.deptName%>"><%=department.deptName%></a></td>
       <td><%=department.building%></td>
       <td>₹ <%=department.budget%></td>
+      <td>
+        <form action="/departments/<%=department.deptName%>/delete" method ="POST">
+          <button>Delete</button>
+        </form>
+      </td>
     </tr>
     <%})%>
     </table>
