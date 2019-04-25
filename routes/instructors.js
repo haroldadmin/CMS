@@ -284,7 +284,7 @@ router.post("/", (req, res) => {
                 message: "An error occured while trying to save the instructor details"
             });
         }
-       res.render("/instructors");
+        res.render("/instructors");
     });
 });
 
@@ -327,5 +327,25 @@ router.delete("/:id", (req, res) => {
         });
     });
 });
+
+/**
+ * Internal only route, not a part of the public API
+ * This exists because I do not know how to make a delete request
+ * from HTML.
+ */
+router.post("/:id/delete", (req, res) => {
+    const sqlQuery =
+        `DELETE FROM ${tables.tableNames.instructor}
+    WHERE ${tables.instructorColumns.id} = ?`;
+    db.run(sqlQuery, [req.params.id], (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred while trying to delete the instructor"
+            });
+        }
+        return res.redirect("/instructors");
+    });
+})
 
 module.exports = router;
