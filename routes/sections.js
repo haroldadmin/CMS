@@ -56,7 +56,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/create", function(req, res){
+router.get("/create", function (req, res) {
     res.render("../FrontEnd/createSection.ejs")
 });
 
@@ -269,3 +269,23 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
+
+/** 
+ * Internal only route, not a part of the public API
+ * This exists because I do not know how to make a delete request from HTML
+ */
+router.post("/:id/delete", (req, res) => {
+    const sqlQuery = `
+    DELETE FROM ${tables.tableNames.section}
+    WHERE ${tables.sectionColumns.id} = ?`;
+
+    db.run(sqlQuery, [req.params.id], (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "An error occurred while trying to delete this section."
+            });
+        }
+        res.redirect("/sections");
+    });
+});
