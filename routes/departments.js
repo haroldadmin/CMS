@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const tables = require('../db/tables');
 const db = require('../db/database').getDatabase();
-const fs = require('fs');
 const { validateDepartment, validateTeaches } = require('../db/models');
 
 /**
@@ -85,6 +84,15 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:name/instructors/create", (req, res) => {
+    const name = req.params.name;
+    res.render('../FrontEnd/addInstructorToDept.ejs', { name: name });
+});
+
+router.get("/create", (req, res) => {
+    res.render('../FrontEnd/createDepartment.ejs');
+});
+
 /**
  * @swagger
  * /departments/{name}:
@@ -116,29 +124,6 @@ router.get("/", (req, res) => {
  *              schema:
  *                  $ref: "#/definitions/Error"
  */
-
-router.get("/heya", function(req, res){
-      res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.readFile('../CMS/FrontEnd/index.html', null, function(error, data){
-    if(error){
-      console.log(error);
-    }
-    else{
-      res.write(data);
-        }
-        res.end();
-  })
-})
-
-router.get("/:name/instructors/create", (req, res) => {
-    const name = req.params.name;
-    res.render('../FrontEnd/addInstructorToDept.ejs', {name:name});
-});
-
-router.get("/create", (req, res) => {
-    res.render('../FrontEnd/createDepartment.ejs');
-});
-
 router.get("/:name", (req, res) => {
     // Adding COLLATE NOCASE makes the queries case insensitive.
     const sqlQuery = `SELECT * FROM ${tables.tableNames.department} WHERE ${tables.deptColumns.deptName} = ? COLLATE NOCASE`;
@@ -209,7 +194,7 @@ router.get("/:name/instructors", (req, res) => {
             });
         }
         // res.send(rows);
-        res.render("../FrontEnd/deptInstructors.ejs", { instructors: rows});
+        res.render("../FrontEnd/deptInstructors.ejs", { instructors: rows });
     });
 });
 
@@ -397,7 +382,7 @@ router.post("/:name/instructors", (req, res) => {
                 message: "An error occured while trying to save the instructor relation"
             });
         }
-       res.redirect(`/departments/${req.params.name}/instructors`);
+        res.redirect(`/departments/${req.params.name}/instructors`);
     });
 });
 
