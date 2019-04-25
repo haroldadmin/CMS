@@ -86,7 +86,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/create", function(req, res){
+router.get("/create", function (req, res) {
     res.render("../FrontEnd/createStudent.ejs");
 });
 
@@ -295,6 +295,21 @@ router.delete("/:id", (req, res) => {
         return res.send({
             message: "Student deleted successfully."
         });
+    });
+});
+
+router.post("/:id/delete", (req, res) => {
+    const sqlQuery = `
+    DELETE FROM ${tables.tableNames.student}
+    WHERE ${tables.studentColumns.id} == ?`
+
+    db.run(sqlQuery, [req.params.id], (err) => {
+        if (err) {
+            return res.status(500).send({
+                message: "An error occurred while trying to delete this student."
+            });
+        }
+        return res.direct("/students");
     });
 });
 
