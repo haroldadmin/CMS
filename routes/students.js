@@ -273,7 +273,7 @@ router.post("/", (req, res) => {
  *            type: integer
  *      responses:
  *          200:
- *              description: Student deleted successfully 
+ *              description: Student deleted successfully
  *              schema:
  *                  $ref: "#/definitions/Success"
  *          500:
@@ -309,7 +309,7 @@ router.post("/:id/delete", (req, res) => {
                 message: "An error occurred while trying to delete this student."
             });
         }
-        return res.direct("/students");
+        return res.redirect("/students");
     });
 });
 
